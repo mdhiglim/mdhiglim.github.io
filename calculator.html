@@ -1,0 +1,183 @@
+<html>
+<head>
+	<title>Cálculo de honorarios</title>
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-8">
+				<h1 class="h1">Cálculo de honorarios para México 2020</h1>
+				<p class="lead">Calcula el IVA, Retención de ISR/IVA en cobro de honorarios
+					para llenar el recibo cuando se cobra a una empresa. Actualizado para
+					calcular al 8% en la frontera (Estímulo fiscal para la zona fronteriza norte)
+				</p>
+				<div class="row">
+					<div class="col-sm-5 hidden-print">
+						<div class="panel panel-warning">
+							<div class="panel-heading"><h3 class="panel-title">Monto a calcular / honorarios</h3></div>
+							<div class="panel-body">
+								<input type="number" step="any" id="subtotal" value="" class="form-control input-lg" onkeyup="calcula();" placeholder="Escriba el monto">
+								<div class="radio text-center alert alert-success">
+									IVA
+									<label><input type="radio" name="xiva" class="xiva" value="16" checked="" onclick="calcula();"> 16% </label>
+									<label><input type="radio" name="xiva" class="xiva" value="8" onclick="calcula();"> 8% </label>
+								</div>
+								<div class="checkbox" id="estotale"><label><input type="checkbox" id="estotal" onclick="calcula();"> El monto es lo que quiero cobrar en total</label></div>
+								<div class="radio"><label><input type="radio" name="persona" onclick="calcula();" value="1" checked="">Expedido a persona moral</label></div>
+								<div class="radio"><label><input type="radio" name="persona" onclick="calcula();" value="2">Expedido a persona física</label></div>
+								<p class="text-muted">
+									Vea la explicación del resultado más abajo
+									<i class="glyphicon glyphicon-arrow-down"></i>
+								</p>
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-7">
+						<div class="panel panel-success">
+							<div class="panel-heading">
+								<h3 class="panel-title">Resultando:</h3></div>
+								<table class="table table-striped table-condensed" id="resultando">
+									<tbody><tr><td>Monto (+) </td><td class="rsubtotal text-right"></td></tr>
+										<tr><td class="retiene1">IVA 16% (+) <small class="text-muted">tasa 0.160000 </small></td><td class="riva text-right"></td></tr>
+										<tr class="text-info"><td class="text-right">Total factura </td><td class="elsubtotal text-right"></td></tr>
+										<tr><td>Retención IVA (-) <small class="text-muted">2/3 partes del IVA tasa 0.106666 </small></td><td class="rriva text-right"></td></tr>
+										<tr><td>Retención ISR (-) <small class="text-muted">10% tasa 0.100000 </small> </td><td class="risr text-right"></td></tr>
+										<tr class="success"><td>Cantidad a recibir: </td><td class="total text-right"></td></tr>
+									</tbody></table>
+									<p class="text-center">
+										<label class="d4"> <input type="checkbox" id="separa" name="coma" onclick="calcula();"> separa miles </label>
+										<label class="d4"> <input type="checkbox" id="d4" name="d4" onclick="calcula();"> 4 decimales </label>
+									</p>
+								</div>
+							</div>
+						</div>
+						<p class="text-danger">
+							Si marca la opción "El monto es lo que quiero cobrar"
+							entonces hará el cálculo para obtener lo que debería cobrar a su contratante.
+						</p>
+						<div class="panel panel-info">
+							<div class="panel-heading"><h3 class="panel-title">Lo que significa…</h3></div>
+							<div class="panel-body">
+								<p class="lead" id="resultado">
+									Primero escriba una cantidad
+								</p>
+								
+							</div>
+						</div>
+						<p class="text-muted">
+							Esta herramienta es informativa solamente, no sustituye ni le quita
+							chamba a ningún contador. Tampoco contador alguno fue lastimado durante
+							el proceso de pruebas de ésta herramienta.
+						</p>
+					</div>
+				</div>
+			</div>
+
+			<link rel="stylesheet" href="./calculadora/estilo.min.css">
+
+			<script src="./Calculadora/jquery-1.12.4.js">
+			></script>
+			<script>
+         /*
+         * función que calcula los montos
+         */
+         function calcula() {
+               //console.log('calcula');
+               var d = $("#subtotal").val();
+               d = d.replace(/(,|\$|\s)/g,'');
+               //console.log(d);
+               var sub=parseFloat(d);
+               if(sub<0 || isNaN(sub))sub=0;
+               if(sub==0) {
+               	return false;
+               }
+               var d4 = document.getElementById("d4").checked
+               var separa = document.getElementById("separa").checked
+               var dec = 2;
+               if(d4) { dec=4; }
+               var estotal = document.getElementById("estotal").checked;
+               var $subtotal=0;
+               var per = $("input[name='persona']").prop('checked');
+               //elige como total? si es persona moral, desaperece.
+               if(!per) { estotal = document.getElementById("estotal").checked = false; $("#estotale").hide(); }
+               else { $("#estotale").show(); }
+               if(estotal && per) {
+               	$subtotal = sub/0.95333333;
+               	sub=$subtotal;
+               	subtotale = sub;
+               } else {
+               	$subtotal = sub;
+               }
+               var xiva = $(".xiva:checked").val();
+               //var $iva=sub*.16;
+               var $iva = (sub * xiva) / 100; //calcula el IVA
+               console.log("iva = (sub) "+sub+' , '+$iva);
+               // persona física o moral
+               if(per) {
+               	var $isr = sub*.1;
+               	var $riva = ($iva/3)*2;
+               	var $total= (sub+$iva) - $isr - $riva;
+               } else {
+               	var $isr = 0;
+               	var $riva = 0;
+               	var $total= (sub+$iva) - $isr - $riva;
+               }
+               //
+               if(isNaN($isr))$isr=0;
+               if(isNaN($iva))$iva=0;
+               if(isNaN($riva))$riva=0;
+               if(isNaN($total<0))$total=0;
+               //
+               // muestra los montos en la tabla de resultados
+               $(".rsubtotal").html('$'+ number_format(sub,dec,separa));
+               $(".riva").html('$'+ number_format($iva,dec,separa));
+               $(".rriva").html('$'+ number_format($riva,dec,separa));
+               $(".risr").html('$'+ number_format($isr,dec,separa));
+               var $elsub = sub+$iva;
+               $(".elsubtotal").html('$'+  number_format($elsub,dec,separa));
+               //
+               //
+               $(".total").html('$'+ number_format($total,dec,separa));
+               //
+               $(".retiene1").html('IVA '+xiva+'% (+) <small class="text-muted">tasa '+(xiva/100)+' </small>');
+               //
+               var $enum = 'De una factura de honorarios que usted emita por <strong class="text-info">$'+number_format(sub,dec,separa)+'</strong> +IVA ('+xiva+'%), ';
+               $enum += ' el cálculo arrojará un';
+               $enum += ' IVA a trasladar por <strong class="text-warning">$'+number_format($iva,dec,separa)+"</strong>";
+               if(per) {
+               	$enum += ', de retención de IVA <strong class="text-success">$'+number_format($riva,dec,separa);
+               	$enum += '</strong> de retención de ISR <strong class="text-success">$'+number_format($isr,dec,separa)+'</strong>';
+               }
+               $enum += '. Usted recibirá un total de <strong class="text-danger">$'+number_format($total,dec,separa);
+               $enum += '</strong> pesos M/N y la factura saldrá por un total de <strong>$';
+               $enum += number_format($elsub,dec,separa)+ '</strong> (subtotal + IVA)';
+               $("#resultado").html($enum);
+           }
+           $("#envia").on( "click", function(event) {
+           	var data = "RESULTADO: ";
+           	data += $("#resultando").text();
+           	data += "\r\n\r\n";
+           	data += $("#resultado").text();
+           	data += "\r\n\r\n -- Cálculo de honorarios https://tar.mx/apps/honorarios/\r\n";
+           	$(this).attr('href',"mailto:?subject=resultado honorarios "+$(".rsubtotal").html()+" +IVA&body="+encodeURIComponent(data));
+           });
+         //https://gist.github.com/jrobinsonc/5718959
+         var number_format = function(amount, decimals,separa) {
+         	if(!separa) { return amount.toFixed(decimals); }
+               amount += ''; // por si pasan un numero en vez de un string
+               amount = parseFloat(amount.replace(/[^0-9\.]/g, '')); // elimino cualquier cosa que no sea numero o punto
+               decimals = decimals || 0; // por si la variable no fue fue pasada
+               // si no es un numero o es igual a cero retorno el mismo cero
+               if (isNaN(amount) || amount === 0) 
+               	return parseFloat(0).toFixed(decimals);
+               // si es mayor o menor que cero retorno el valor formateado como numero
+               amount = '' + amount.toFixed(decimals);
+               var amount_parts = amount.split('.'),
+               regexp = /(\d+)(\d{3})/;
+               while (regexp.test(amount_parts[0]))
+               	amount_parts[0] = amount_parts[0].replace(regexp, '$1' + ',' + '$2');
+               return amount_parts.join('.');
+           }
+       </script>
+   </body>
+   </html>
