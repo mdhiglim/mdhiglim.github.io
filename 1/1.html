@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>1</title>
+  <meta name="generator" content="Google Web Designer 10.0.1.1204">
+  <style type="text/css" id="gwd-text-style">
+    p {
+      margin: 0px;
+    }
+    h1 {
+      margin: 0px;
+    }
+    h2 {
+      margin: 0px;
+    }
+    h3 {
+      margin: 0px;
+    }
+  </style>
+  <style type="text/css">
+    html, body {
+      width: 100%;
+      height: 100%;
+      margin: 0px;
+    }
+    body {
+      background-color: transparent;
+      transform: perspective(1400px) matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+      transform-style: preserve-3d;
+    }
+    .gwd-input-1fe1 {
+      position: absolute;
+      width: 50px;
+      height: 20px;
+      left: 568px;
+      top: 110px;
+    }
+    .gwd-input-1aq6 {
+      position: absolute;
+      left: 85.3335px;
+      top: 106.667px;
+      width: 100px;
+      height: 20px;
+    }
+    .gwd-p-1nfw {
+      position: absolute;
+      left: 85px;
+      top: 56px;
+      width: 115px;
+      height: 20px;
+      transform-origin: 50% 50% 0px;
+    }
+    .gwd-p-10ce {
+      position: absolute;
+      width: 142px;
+      height: 20px;
+      transform-origin: 50% 50% 0px;
+      left: 14px;
+      top: 51px;
+    }
+    .gwd-span-14yf {
+      display: block;
+      height: 49.3333px;
+      position: absolute;
+      width: 213.333px;
+      color: rgb(42, 42, 42);
+      left: 289px;
+      top: 333px;
+    }
+    .gwd-input-f4y1 {
+      position: absolute;
+      height: 20px;
+      background-image: none;
+      border-image-source: none;
+      border-image-width: 1;
+      border-image-outset: 0;
+      border-image-repeat: stretch;
+      border-color: rgb(255, 255, 255);
+      background-color: rgb(0, 0, 0);
+      transform-origin: 50% 50% 0px;
+      width: 205px;
+      left: 300px;
+      color: rgb(200, 200, 200);
+      top: 173px;
+    }
+    .gwd-input-2uex {
+      position: absolute;
+      width: 15px;
+      height: 15px;
+      top: 267px;
+      left: 348px;
+    }
+    .gwd-label-13t9 {
+      position: absolute;
+      height: 20px;
+      left: 300px;
+      transform-origin: 50% 50% 0px;
+      width: 40px;
+      top: 268px;
+    }
+    .gwd-span-qe6e {
+      position: absolute;
+      left: 381px;
+      top: 268px;
+      color: rgb(39, 39, 39);
+    }
+    .gwd-input-r8fi {
+      left: 433px;
+    }
+    .gwd-span-1od9 {
+      left: 466px;
+    }
+    .gwd-span-xptb {
+      left: 381px;
+      top: 268px;
+    }
+    .gwd-input-yjdo {
+      left: 348px;
+      top: 265px;
+    }
+    .gwd-input-n525 {
+      position: absolute;
+      left: 353px;
+      width: 15px;
+      height: 15px;
+      top: 265px;
+    }
+    .gwd-input-4gic {
+      position: absolute;
+      width: 15px;
+      height: 15px;
+      left: 438px;
+      top: 265px;
+    }
+    .gwd-label-1bsr {
+      top: 266px;
+      left: 379px;
+    }
+    .gwd-label-9vfi {
+      left: 462px;
+    }
+  </style>
+</head>
+
+<body class="htmlNoPages">
+  <input type="number" id="number_1" class="gwd-input-f4y1" placeholder="Escriba el monto" onkeyup="calcula();">
+  <span id="insert" class="gwd-span-14yf">resultado</span>
+  <label id="label_1" class="gwd-label-13t9">IVA</label>
+  <label id="label_2" class="gwd-label-13t9 gwd-label-1bsr">16%</label>
+  <label id="label_3" class="gwd-label-13t9 gwd-label-1bsr gwd-label-9vfi">8%</label>
+  <input type="radio" id="iva_16" class="gwd-input-n525" value="16" name="iva" data-gwd-name="iva 16" onclick="calcula();" checked="">
+  <input type="radio" id="iva_8" class="gwd-input-4gic" data-gwd-name="iva 8" name="iva" onclick="calcula();">
+  <script>
+    function calcula() {
+      var x = document.getElementById("number_1").value * 1;
+      var r;
+      var iva = document.getElementById("iva_16");
+
+      if (iva.checked) {
+        r = x + (x * iva.value / 100);
+      } else {
+        r = x * 1.08;
+      }
+      document.getElementById("insert").innerHTML = r;
+    }
+  </script>
+</body>
+
+</html>
