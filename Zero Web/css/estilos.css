@@ -1,0 +1,144 @@
+:root{
+    --color-primario: rgba(48, 4, 73,1);
+    --header-size: 70px;
+}
+*{
+    margin: 0;
+    padding: 0;
+    font-family: "helvetica neue";
+    scroll-behavior: smooth;
+    scroll-margin: var(--header-size);
+}
+body{
+    background: var(--color-primario);
+}
+header{
+    width: 100%;
+    position: fixed;
+    display: flex;
+    justify-content: space-between;
+    background: var(--color-primario);
+    /* box-shadow: 5px 5px 2px #0000003a; */
+    max-height: var(--header-size);
+    min-height: var(--header-size);
+    transition: 0.4s;
+}
+header nav{
+    max-width: 1000px;
+    float: right;
+    background: var(--color-primario);
+    overflow: hidden;
+}
+
+header nav ul{
+    list-style: none;
+    overflow: hidden;
+}
+header nav ul li{
+    display: inline-block;    
+}
+header nav ul li a{
+    color:white;
+    padding: 25px;
+    display: block;
+    text-decoration: none;
+}
+header nav a:hover{
+    background: rgba(24, 0, 34, 0.616);
+}
+.logo{
+    cursor:pointer;
+    color: white;
+    margin-top: 12px;
+    margin-left: 20px;
+}
+.logo a{
+    text-decoration: none;
+    color: white;
+    font-size: 32px;
+}
+.menu_bar{
+    display: none;
+}
+header div{
+    display: inline-block;
+}
+
+@media screen and (max-width: 800px){
+  
+    header nav {
+        width: 80%;
+        height: 100%;
+        margin:0;
+        position:fixed;
+        left:-100%;
+        display: block;
+        top: var(--header-size);
+    }
+    header nav ul li{
+        display: block;
+        float: none;
+        border-bottom: 1px solid rgba(255,255,255, .3);
+    }
+    .menu_bar{
+        display: block;
+        float:right;
+    }
+    .menu_bar .bt-menu{
+        display: block;
+        padding:10px 20px;
+        font-size: 32px;
+        color: white;
+        text-decoration: none;
+    }
+}
+.container{
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: var(--header-size) 1fr;
+}
+#Inicio{
+    padding-top: 20px;
+    height: 700px;
+    background:pink;
+    display:inline-block;
+    width:100%;
+    text-align: center;
+}
+#Acerca-de{
+    padding-top: 20px;
+    height: 700px;
+    background:yellowgreen;
+    display:inline-block;
+    width:100%;
+    text-align: center;
+}
+#Historia{
+    padding-top: 20px;
+    height: 700px;
+    background:cornflowerblue;
+    display:inline-block;
+    width:100%;
+    text-align: center;
+}
+#Blog{
+    padding-top: 20px;
+    height: 700px;
+    background:sandybrown;
+    display:inline-block;
+    width:100%;
+    text-align: center;
+}
+#Contacto{
+    padding-top: 20px;
+    height: 700px;
+    background:darkcyan;
+    display:inline-block;
+    width:100%;
+    text-align: center;
+}
+article, p{
+    width: 90%;
+    padding: 5%;
+}
